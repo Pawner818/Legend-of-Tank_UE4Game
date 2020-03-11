@@ -16,4 +16,12 @@ class LOT_API ATankPlayerController : public APlayerController
 public:
 
 	ATank* GetControlledTank() const;
+
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
+
+	// Start the tank moving the barrel so that a shot would hit where
+	// the crosshair intersects the world
+	void AimTowardsCrosshair();
 };
