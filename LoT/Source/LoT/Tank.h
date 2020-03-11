@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
@@ -11,9 +12,13 @@ class LOT_API ATank : public APawn
 {
 	GENERATED_BODY()
 
-public:
+private:
+
 	// Sets default values for this pawn's properties
 	ATank();
+
+
+public:
 
 	void AimAt(FVector HitLocation);
 
@@ -25,5 +30,8 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
+protected:
+	UTankAimingComponent* TankAimingComponent = nullptr;
 
 };
