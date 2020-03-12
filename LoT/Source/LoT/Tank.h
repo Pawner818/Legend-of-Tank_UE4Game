@@ -51,8 +51,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	
-
 	double LastFireTime = 0;
 
 	// Local barrel reference for spawning projectile
