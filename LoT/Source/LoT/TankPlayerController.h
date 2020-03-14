@@ -15,6 +15,7 @@ class LOT_API ATankPlayerController : public APlayerController
 
 private:
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
 	ATank* GetControlledTank() const;
 
 	virtual void BeginPlay() override;
