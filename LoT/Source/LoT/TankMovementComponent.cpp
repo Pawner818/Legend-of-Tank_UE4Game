@@ -12,16 +12,31 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 	RightTrack = RightTrackToSet;
 }
 
-
+// UP button on the keyboard
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 }
 
+// DOWN button on the keyboard
+void UTankMovementComponent::IntendMoveBackward(float Throw)
+{
+	LeftTrack->SetThrottle(-Throw);
+	RightTrack->SetThrottle(-Throw);
+}
+
+// RIGHT button on the keyboard
 void UTankMovementComponent::IntendMoveRight(float Throw)
 {
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
+}
+
+// LEFT button on the keyboard
+void UTankMovementComponent::IntendMoveLeft(float Throw)
+{
+	LeftTrack->SetThrottle(-Throw);
+	RightTrack->SetThrottle(Throw);
 }
 
