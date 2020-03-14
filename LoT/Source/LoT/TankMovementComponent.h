@@ -34,6 +34,8 @@ public:
     UFUNCTION(BlueprintCallable, Category=Input)
     void IntendMoveLeft(float Throw);
 
+    void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 private:
 
     UTankTrack* LeftTrack = nullptr;
