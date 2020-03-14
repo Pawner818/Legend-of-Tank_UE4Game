@@ -42,7 +42,7 @@ void UTankMovementComponent::IntendMoveLeft(float Throw)
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
-	// Moving forward
+	// Moving forward/backward
 	auto TankForwardDirection = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
     auto ForwardThrow = FVector::DotProduct(TankForwardDirection, AIForwardIntention);
@@ -52,7 +52,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	auto RightThrow = FVector::CrossProduct(TankForwardDirection, AIForwardIntention).Z;
 	IntendMoveRight(RightThrow);
 	
-	/*UE_LOG(LogTemp, Warning, TEXT("Value of the max velocity: %s, Tank: %s"), *MoveVelocityString, *CurrentTank);*/
+	UE_LOG(LogTemp, Warning, TEXT("Right: %f, Forward: %f "), RightThrow,ForwardThrow);
 }
 
 
