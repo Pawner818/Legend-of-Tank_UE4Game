@@ -35,10 +35,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-	//void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	//void SetTurretReference(UTankTurret* TurretToSet);
-
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 protected:

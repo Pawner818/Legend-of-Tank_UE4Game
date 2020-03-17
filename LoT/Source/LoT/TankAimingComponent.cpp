@@ -19,14 +19,14 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	if (!BarrelToSet || !TurretToSet) { UE_LOG(LogTemp, Warning, TEXT("Barrel or Turret is misssing! Check it out!")) return; }
+	if (!ensure(BarrelToSet && TurretToSet)) { return; }
 	BarrelToSet = Barrel;
 	TurretToSet = Turret;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 
 	FVector OutLaunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
