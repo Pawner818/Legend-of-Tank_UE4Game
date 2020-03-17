@@ -34,8 +34,6 @@ public:
     UFUNCTION(BlueprintCallable, Category=Input)
     void IntendMoveLeft(float Throw);
 
-    
-
 private:
 
     // Called from the pathfinding logic by the AI controller
