@@ -22,16 +22,16 @@ public:
     UFUNCTION(BlueprintCallable, Category=Setup)
     void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
-    UFUNCTION(BlueprintCallable, Category=Input)
+    UFUNCTION(BlueprintCallable, Category = "Input")
     void IntendMoveForward(float Throw);
 
-    UFUNCTION(BlueprintCallable, Category = Input)
+    UFUNCTION(BlueprintCallable, Category = "Input")
     void IntendMoveBackward(float Throw);
 
-    UFUNCTION(BlueprintCallable, Category=Input)
+    UFUNCTION(BlueprintCallable, Category = "Input")
     void IntendMoveRight(float Throw);
 
-    UFUNCTION(BlueprintCallable, Category=Input)
+    UFUNCTION(BlueprintCallable, Category = "Input")
     void IntendMoveLeft(float Throw);
 
 private:
