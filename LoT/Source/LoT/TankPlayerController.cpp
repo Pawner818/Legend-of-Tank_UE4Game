@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
-#include "LoT.h"
 #include "TankAimingComponent.h"
+#include "LoT.h"
 
 void ATankPlayerController::BeginPlay()
 {
@@ -15,12 +15,13 @@ void ATankPlayerController::BeginPlay()
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	/*AimTowardsCrosshair();*/
+	AimTowardsCrosshair();
 }
 
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
+	if (!GetPawn()) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 
