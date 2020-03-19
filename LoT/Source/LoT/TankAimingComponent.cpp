@@ -1,4 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+
 #include "LoT.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
@@ -14,6 +15,7 @@ UTankAimingComponent::UTankAimingComponent()
 	
 	PrimaryComponentTick.bCanEverTick = true;
 }
+
 void UTankAimingComponent::BeginPlay()
 {
 	// So that first first is after initial reload
@@ -84,9 +86,18 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirections)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirections.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
+
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
+	if (DeltaRotator.Yaw < 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(-DeltaRotator.Yaw);
+	}
 }
+
 void UTankAimingComponent::Fire()
 {
 	if (FiringState != EFiringState::Reloading)
