@@ -30,22 +30,37 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
+
+	// Colours for our aiming component, depends on what's going on - when we Reloading, the colour changes to red etc.
+
+	if(RoundsLeft <= 0)
+	{
+		FiringState = EFiringState::OutOfBullets;
+	}
+	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	{
+		FiringState = EFiringState::Reloading;
+	}
 	
-		if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
-		{
-			FiringState = EFiringState::Reloading;
-		}
-	
-		else if (IsBarrelMoving())
-		{
-			FiringState = EFiringState::Aiming;
-		}
-		else
-		{
-			FiringState = EFiringState::Locked;
-		}
+	else if (IsBarrelMoving())
+	{
+		FiringState = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringState = EFiringState::Locked;
+	}
 }
 
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
@@ -79,14 +94,17 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	}
 	// If no solution found do nothing
 }
+
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirections)
 {
 	if (!ensure(Barrel) || !ensure(Turret)) { return; }
+
 	// Work-out difference between current barrel roation, and AimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirections.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
+	// Rotation logic
 	Barrel->Elevate(DeltaRotator.Pitch);
 	if (DeltaRotator.Yaw < 180)
 	{
@@ -100,7 +118,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirections)
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringState != EFiringState::Reloading)
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
 		// Spawn a projectile at the socket location on the barrel
 		if (!ensure(Barrel)) { return; }
@@ -111,11 +129,12 @@ void UTankAimingComponent::Fire()
 			Barrel->GetSocketRotation(FName("Projectile"))
 			);
 		Projectile->LaunchProjectile(LaunchSpeed);
+
+		// AI tanks and you can't fire more than one hit per 3 sec by default
 		LastFireTime = FPlatformTime::Seconds();
+
+		// Numbers of ammo must be more than 0
+		RoundsLeft--;
 	}
 }
 
-EFiringState UTankAimingComponent::GetFiringState() const
-{
-	return FiringState;
-}
