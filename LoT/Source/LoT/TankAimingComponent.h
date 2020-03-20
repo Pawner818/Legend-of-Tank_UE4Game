@@ -51,15 +51,13 @@ private:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	// Move barrel function, is used by our Tank and AI
 	void MoveBarrelTowards(FVector AimDirections);
 
 	bool IsBarrelMoving();
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int GetRoundsLeft() const;
-
-	UTankBarrel* Barrel = nullptr;
-	UTankTurret* Turret = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
@@ -70,9 +68,16 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	double LastFireTime = 0;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	int32 RoundsLeft = 3;
 
 	FVector AimDirection;
+
+	// Local pointers 
+	UTankBarrel* Barrel = nullptr;
+
+	UTankTurret* Turret = nullptr;
 }; 
