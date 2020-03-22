@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Tank.h"
 #include "TankAIController.generated.h"
+
+
 
 UCLASS()
 class LOT_API ATankAIController : public AAIController
@@ -17,6 +20,11 @@ private:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	float AcceptanceRadius = 8000.f;
+
+	UFUNCTION()
+	void OnPossedTankDeath();
 };

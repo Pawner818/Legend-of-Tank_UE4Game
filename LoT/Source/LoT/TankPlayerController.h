@@ -17,6 +17,9 @@ class LOT_API ATankPlayerController : public APlayerController
 
 protected:
 
+	UFUNCTION()
+	void OnPossedTankDeath();
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompReference);
 
@@ -25,6 +28,8 @@ private:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
+
+	void SetPawn(APawn* InPawn);
 
 	// Start the tank moving the barrel so that a shot would hit where
 	// the crosshair intersects the world
@@ -38,11 +43,13 @@ private:
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 
 	UPROPERTY(EditAnywhere)
-		float CrosshairXLocation = 0.5;
+		float CrosshairXLocation = 0.5f;
 
 	UPROPERTY(EditAnywhere)
-		float CrosshairYLocation = 0.3333;
+		float CrosshairYLocation = 0.3333f;
 
 	UPROPERTY(EditAnywhere)
-		float LineTraceRange = 1000000;
+	float LineTraceRange = 1000000.f;
+
+	
 };

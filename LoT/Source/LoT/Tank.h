@@ -3,13 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Delegates/DelegateCombinations.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
+
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
 UCLASS()
 class LOT_API ATank : public APawn
 {
 	GENERATED_BODY()
+
+public:
+
+	// Return current health as a percentage of starting health between 0 and 1
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealthPercent() const;
+
+	FTankDelegate OnDeath;
 
 private:
 
@@ -17,6 +29,8 @@ private:
 	ATank();
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
+	virtual void BeginPlay() override;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 100;
@@ -24,7 +38,5 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Health")
 	int32 CurrentHealth = StartingHealth;
 
-	// Return current health as a percentage of starting health between 0 and 1
-	UFUNCTION(BlueprintPure, Category = "Health")
-	float GetHealthPercent() const;
+	
 };
